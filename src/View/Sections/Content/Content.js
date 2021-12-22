@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import "./Content.scss";
 import Context from "../../../context";
+import editButton from "../../../imgs/icon-edit.png";
 
 const url = "http://159.223.167.52/api";
 
@@ -33,12 +34,12 @@ function Content() {
   if (data.isLoaded && data.response.status !== "200") return <div>Error</div>;
 
   return (
-    <div>
+    <div className="Content">
       {!data.isLoaded ? (
         <div>Loading</div>
       ) : (
         <div>
-          <table border="1px">
+          <table>
             <caption>
               {currentTable.charAt(0).toUpperCase() +
                 currentTable
@@ -47,25 +48,35 @@ function Content() {
                   .join(" ")
                   .toLowerCase()}
             </caption>
-
-            <tr>
-              {data.response.pattern.map((key) => {
-                return <th key={key}>{key}</th>;
+            <thead>
+              <tr>
+                {data.response.pattern.map((key) => {
+                  return <th key={key}>{key}</th>;
+                })}
+                <th className="table-head-edit">@</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.response.content.map((element) => {
+                return (
+                  <tr key={element.id}>
+                    {data.response.pattern.map((key) => {
+                      return (
+                        <td key={key}>
+                          <input value={element[key]} />
+                        </td>
+                      );
+                    })}
+                    <td className="table-buttons">
+                      <button>
+                        <img width="30px" src={editButton}></img>
+                      </button>
+                      <button></button>
+                    </td>
+                  </tr>
+                );
               })}
-            </tr>
-            {data.response.content.map((element) => {
-              return (
-                <tr key={element.id}>
-                  {data.response.pattern.map((key) => {
-                    return (
-                      <td key={key}>
-                        <input value={element[key]} />
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
+            </tbody>
           </table>
         </div>
       )}

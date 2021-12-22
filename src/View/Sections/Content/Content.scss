@@ -1,3 +1,68 @@
 .Content {
-  background-color: aqua;
+  width: 80%;
+  table {
+    width: 90%;
+    border: none;
+    margin-bottom: 20px;
+  }
+  table {
+    thead {
+      th {
+        font-weight: bold;
+        text-align: left;
+        border: none;
+        padding: 10px 15px;
+        background: #d8d8d8;
+        font-size: 14px;
+      }
+      tr th:first-child {
+        border-radius: 8px 0 0 8px;
+      }
+      tr th:last-child {
+        border-radius: 0 8px 8px 0;
+      }
+    }
+    tbody td {
+      text-align: left;
+      border: none;
+      padding: 10px 15px;
+      font-size: 14px;
+    }
+    tbody tr:nth-child(even) {
+      background: #f3f3f3;
+    }
+    tbody tr {
+      td:first-child {
+        border-radius: 8px 0 0 8px;
+      }
+      td:last-child {
+        border-radius: 0 8px 8px 0;
+      }
+    }
+  }
+  .table-head-edit {
+    width: 70px;
+  }
+  .table-buttons {
+    padding: 5px;
+    button {
+      margin: 2px;
+      cursor: pointer;
+      border: none;
+      background-color: initial;
+
+      &:hover {
+        border-radius: 10px;
+        background-color: rgba(92, 100, 205, 0.342);
+      }
+    }
+  }
+  tr,
+  input {
+    background-color: initial;
+    border: none;
+  }
+  input {
+    width: 98%;
+  }
 }
