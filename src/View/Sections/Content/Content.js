@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import "./Content.scss";
 import Context from "../../../context";
 import editButton from "../../../imgs/icon-edit.png";
+import deleteButton from "../../../imgs/icon-delete.png";
 
 const url = "http://159.223.167.52/api";
 
@@ -53,7 +54,7 @@ function Content() {
                 {data.response.pattern.map((key) => {
                   return <th key={key}>{key}</th>;
                 })}
-                <th className="table-head-edit">@</th>
+                <th className="table-head-edit"></th>
               </tr>
             </thead>
             <tbody>
@@ -69,9 +70,11 @@ function Content() {
                     })}
                     <td className="table-buttons">
                       <button>
-                        <img width="30px" src={editButton}></img>
+                        <img width="28px" src={editButton}></img>
                       </button>
-                      <button></button>
+                      <button>
+                        <img width="28px" src={deleteButton}></img>
+                      </button>
                     </td>
                   </tr>
                 );
