@@ -1,23 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Navbar from "./View/Sections/Navbar/Navbar";
+import Sidebar from "./View/Sections/Sidebar/Sidebar";
+import Content from "./View/Sections/Content/Content";
+import Context from "./context";
+
+import "./App.scss";
 
 function App() {
+  var [currentTable, setCurrentTable] = useState();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Context.Provider value={{ currentTable, setCurrentTable }}>
+        <Navbar />
+        <div className="wrapper">
+          <Sidebar />
+          {currentTable ? <Content /> : <div></div>}
+        </div>
+      </Context.Provider>
     </div>
   );
 }
