@@ -37,3 +37,29 @@ export function deleteContent(currentTable, element) {
     .catch((error) => console.log("error", error));
   return true;
 }
+
+export function changeContent(currentTable, element) {
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    type: "edit",
+    content: {
+      table: currentTable,
+      obj: element,
+    },
+  });
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch(url, requestOptions)
+    .then((response) => response.json())
+    .catch((res) => console.log(res))
+    .catch((error) => console.log("error", error));
+  return true;
+}

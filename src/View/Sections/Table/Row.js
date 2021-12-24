@@ -3,12 +3,24 @@ import Context from "../../../context";
 
 import editButton from "../../../imgs/icon-edit.png";
 import deleteButton from "../../../imgs/icon-delete.png";
+import saveButton from "../../../imgs/icon-save.png";
+import cancelButton from "../../../imgs/icon-cancel.png";
 
-import { deleteContent } from "../Api/Api";
+import { changeContent, deleteContent } from "../Api/Api";
 
 function Row({ pattern, element }) {
   var { currentTable, updateState } = useContext(Context);
+  var [rowData, setRowData] = useState(element);
+  var [isChanged, setIsChanged] = useState(false);
   var [isEdit, setIsEdit] = useState(false);
+
+  function editRowData(e) {
+    setIsChanged(true);
+    var key = e.target.name;
+    var value = e.target.value;
+    setRowData({ ...rowData, [key]: value });
+  }
+
   function deleteElement(flag) {
     if (flag) {
       if (deleteContent(currentTable, element)) {
@@ -18,33 +30,59 @@ function Row({ pattern, element }) {
     }
   }
 
+  function saveChanges() {
+    if (changeContent(currentTable, rowData)) {
+      alert("Successfully update");
+      updateState();
+    } else alert("Something went wrong");
+  }
+  function cancelChanges() {
+    setIsEdit(false);
+    setIsChanged(false);
+    setRowData(element);
+  }
+
   return (
-    <tr key={element.id}>
+    <tr key={rowData.id}>
       {pattern.map((key) => {
         return (
           <td key={key}>
-            {isEdit ? (
+            {isEdit && key !== "id" ? (
               <input
-                onChange={() => console.log("changed")}
-                value={element[key]}
+                name={key}
+                onChange={(e) => editRowData(e)}
+                value={rowData[key]}
               />
             ) : (
-              <>{element[key]}</>
+              <>{rowData[key]}</>
             )}
           </td>
         );
       })}
       <td className="table-buttons">
-        <button onClick={() => setIsEdit(!isEdit)}>
-          <img alt="edit" width="28px" src={editButton}></img>
-        </button>
-        <button
-          onClick={() =>
-            deleteElement(window.confirm(`Are you sure?  ${element.id}`))
-          }
-        >
-          <img alt="delete" width="28px" src={deleteButton}></img>
-        </button>
+        {isChanged ? (
+          <>
+            <button onClick={() => saveChanges()}>
+              <img alt="edit" src={saveButton}></img>
+            </button>
+            <button onClick={() => cancelChanges()}>
+              <img alt="edit" src={cancelButton}></img>
+            </button>
+          </>
+        ) : (
+          <>
+            <button onClick={() => setIsEdit(!isEdit)}>
+              <img alt="edit" src={editButton}></img>
+            </button>
+            <button
+              onClick={() =>
+                deleteElement(window.confirm(`Are you sure?  ${rowData.id}`))
+              }
+            >
+              <img alt="delete" src={deleteButton}></img>
+            </button>
+          </>
+        )}
       </td>
     </tr>
   );
