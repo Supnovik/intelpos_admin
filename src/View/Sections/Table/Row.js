@@ -4,44 +4,18 @@ import Context from "../../../context";
 import editButton from "../../../imgs/icon-edit.png";
 import deleteButton from "../../../imgs/icon-delete.png";
 
-const url = "http://159.223.167.52/api";
+import { deleteContent } from "../Api/Api";
 
 function Row({ pattern, element }) {
-  var { currentTable } = useContext(Context);
+  var { currentTable, updateState } = useContext(Context);
   var [isEdit, setIsEdit] = useState(false);
-
   function deleteElement(flag) {
     if (flag) {
-      var myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-
-      var raw = JSON.stringify({
-        type: "delete",
-        content: {
-          type: currentTable,
-          obj: {
-            id: element.id,
-          },
-        },
-      });
-
-      var requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow",
-      };
-
-      fetch(url, requestOptions)
-        .then((response) => response.json())
-        .then((result) => getResult(result))
-        .catch((error) => console.log("error", error));
+      if (deleteContent(currentTable, element)) {
+        alert("Successfully deleted");
+        updateState();
+      } else alert("Something went wrong");
     }
-  }
-  function getResult(result) {
-    if (result.status === "200") {
-      alert("Successfully deleted");
-    } else alert("Something went wrong");
   }
 
   return (

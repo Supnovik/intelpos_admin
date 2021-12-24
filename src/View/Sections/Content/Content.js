@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import "./Content.scss";
 import Context from "../../../context";
 import Table from "../Table/Table";
-const url = "http://159.223.167.52/api";
+
+import { getContent } from "../Api/Api";
 
 function Content() {
   var { currentTable } = useContext(Context);
@@ -14,19 +15,15 @@ function Content() {
   useEffect(() => {
     setData({
       isLoaded: false,
-      response: getData(currentTable),
+      response: getContent(currentTable, setData),
     });
   }, [currentTable]);
 
-  function getData(currentTable) {
-    var requestOptions = {
-      method: "GET",
-    };
-
-    fetch(`${url}?${currentTable}`, requestOptions)
-      .then((response) => response.json())
-      .then((res) => setData({ isLoaded: true, response: res }))
-      .catch((error) => console.log("error", error));
+  function updateState() {
+    setData({
+      isLoaded: false,
+      response: getContent(currentTable, setData),
+    });
   }
 
   if (data.isLoaded && data.response.status !== "200") return <div>Error</div>;
@@ -39,15 +36,17 @@ function Content() {
       .toLowerCase();
 
   return (
-    <div className="Content">
-      {!data.isLoaded ? (
-        <div>Loading</div>
-      ) : (
-        <div>
-          <Table data={data} tableName={tableName} />
-        </div>
-      )}
-    </div>
+    <Context.Provider value={{ currentTable, updateState }}>
+      <div className="Content">
+        {!data.isLoaded ? (
+          <div>Loading</div>
+        ) : (
+          <div>
+            <Table data={data} tableName={tableName} />
+          </div>
+        )}
+      </div>
+    </Context.Provider>
   );
 }
 
