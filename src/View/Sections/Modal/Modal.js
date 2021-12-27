@@ -1,7 +1,7 @@
 import React from "react";
 import "./Modal.scss";
 
-export default function Modal() {
+export default function Modal({ setIsLogin }) {
   return (
     <div className="Modal">
       <div className="Modal-wrapper">
@@ -14,7 +14,9 @@ export default function Modal() {
               name="password"
               placeholder="password"
             ></input>
-            <button type="submit">Go</button>
+            <button onClick={() => setIsLogin(true)} type="submit">
+              Go
+            </button>
           </form>
         </div>
       </div>

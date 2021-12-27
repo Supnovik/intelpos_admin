@@ -9,7 +9,7 @@ import "./App.scss";
 
 function App() {
   var [currentTable, setCurrentTable] = useState();
-  var [isLogin, setIsLogin] = useState(true);
+  var [isLogin, setIsLogin] = useState(false);
   return (
     <div className="App">
       {isLogin ? (
@@ -20,7 +20,7 @@ function App() {
           </div>
         </Context.Provider>
       ) : (
-        <Modal />
+        <Modal setIsLogin={setIsLogin} />
       )}
     </div>
   );
