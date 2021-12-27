@@ -3,7 +3,7 @@ import "./Content.scss";
 import Context from "../../../context";
 import Table from "../Table/Table";
 
-import { getContent } from "../Api/Api";
+import { getContent } from "../../../Api/Api";
 
 function Content() {
   var { currentTable } = useContext(Context);

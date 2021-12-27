@@ -6,7 +6,7 @@ import deleteButton from "../../../imgs/icon-delete.png";
 import saveButton from "../../../imgs/icon-save.png";
 import cancelButton from "../../../imgs/icon-cancel.png";
 
-import { changeContent, deleteContent } from "../Api/Api";
+import { postContent } from "../../../Api/Api";
 
 function Row({ pattern, element }) {
   var { currentTable, updateState } = useContext(Context);
@@ -23,7 +23,15 @@ function Row({ pattern, element }) {
 
   function deleteElement(flag) {
     if (flag) {
-      if (deleteContent(currentTable, element)) {
+      if (
+        postContent({
+          type: "delete",
+          content: {
+            table: currentTable,
+            obj: element,
+          },
+        })
+      ) {
         alert("Successfully deleted");
         updateState();
       } else alert("Something went wrong");
@@ -31,7 +39,15 @@ function Row({ pattern, element }) {
   }
 
   function saveChanges() {
-    if (changeContent(currentTable, rowData)) {
+    if (
+      postContent({
+        type: "edit",
+        content: {
+          table: currentTable,
+          obj: rowData,
+        },
+      })
+    ) {
       alert("Successfully update");
       updateState();
     } else alert("Something went wrong");
