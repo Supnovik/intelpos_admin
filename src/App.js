@@ -2,21 +2,26 @@ import React, { useState } from "react";
 import Navbar from "./View/Sections/Navbar/Navbar";
 import Sidebar from "./View/Sections/Sidebar/Sidebar";
 import Content from "./View/Sections/Content/Content";
+import Modal from "./View/Sections/Modal/Modal";
 import Context from "./context";
 
 import "./App.scss";
 
 function App() {
   var [currentTable, setCurrentTable] = useState();
+  var [isLogin, setIsLogin] = useState(true);
   return (
     <div className="App">
-      <Context.Provider value={{ currentTable, setCurrentTable }}>
-        <Navbar />
-        <div className="wrapper">
-          <Sidebar />
-          {currentTable ? <Content /> : <div></div>}
-        </div>
-      </Context.Provider>
+      {isLogin ? (
+        <Context.Provider value={{ currentTable, setCurrentTable }}>
+          <div className="wrapper">
+            <Sidebar />
+            {currentTable ? <Content /> : <div></div>}
+          </div>
+        </Context.Provider>
+      ) : (
+        <Modal />
+      )}
     </div>
   );
 }

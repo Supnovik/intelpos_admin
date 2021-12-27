@@ -1,11 +1,14 @@
 .Content {
   width: 80%;
+
   table {
-    width: 90%;
+    padding: 20px;
+    width: 100%;
     border: none;
     margin-bottom: 20px;
-  }
-  table {
+    caption {
+      margin-top: 20px;
+    }
     thead {
       th {
         font-weight: bold;

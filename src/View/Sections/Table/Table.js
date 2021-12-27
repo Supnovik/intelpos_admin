@@ -5,7 +5,7 @@ function Table({ data, tableName }) {
   return (
     <div className="Table">
       <table>
-        <caption>{tableName}</caption>
+        <caption> {tableName}</caption>
         <thead>
           <tr>
             {data.response.pattern.map((key) => {
