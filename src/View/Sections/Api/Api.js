@@ -1,4 +1,4 @@
-const url = "http://localhost:8081/api";
+const url = "http://159.223.167.52/api";
 
 export function getContent(currentTable, setData) {
   var requestOptions = {
@@ -24,7 +24,6 @@ export function deleteContent(currentTable, element) {
       },
     },
   });
-  console.log(raw);
 
   var requestOptions = {
     method: "POST",
