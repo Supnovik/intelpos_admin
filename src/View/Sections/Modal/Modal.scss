@@ -12,9 +12,9 @@
     margin: 40px;
     box-sizing: border-box;
     box-shadow: 0 0 25px rgba(31, 32, 65, 0.25);
-    .content {
+    .Modal-content {
       padding: 40px 40px;
-      form {
+      .Modal-form {
         display: flex;
         flex-direction: column;
         input {

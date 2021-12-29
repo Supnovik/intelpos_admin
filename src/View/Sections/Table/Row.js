@@ -39,15 +39,14 @@ function Row({ pattern, element }) {
   }
 
   function saveChanges() {
-    if (
-      postContent({
-        type: "edit",
-        content: {
-          table: currentTable,
-          obj: currentData,
-        },
-      })
-    ) {
+    var responce = postContent({
+      type: "edit",
+      content: {
+        table: currentTable,
+        obj: currentData,
+      },
+    });
+    if (responce) {
       alert("Successfully update");
       updateState();
     } else alert("Something went wrong");

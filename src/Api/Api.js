@@ -11,7 +11,7 @@ export function getContent(currentTable, setData) {
     .catch((error) => console.log("error", error));
 }
 
-export function postContent(obj) {
+export async function postContent(obj) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   console.log(obj);
@@ -26,7 +26,12 @@ export function postContent(obj) {
 
   fetch(url, requestOptions)
     .then((response) => response.json())
-    .then((respons) => console.log(respons))
+    .then((res) => setReturn(res))
     .catch((error) => console.log("error", error));
-  return true;
+
+  function setReturn(res) {
+    console.log(res);
+    if (res.status === "200") return true;
+    else return false;
+  }
 }
