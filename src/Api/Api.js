@@ -1,4 +1,4 @@
-const url = "http://localhost:8081/api";
+const url = "http://159.223.167.52/api";
 
 export function getContent(currentTable, setData) {
   var requestOptions = {

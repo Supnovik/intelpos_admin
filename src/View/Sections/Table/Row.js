@@ -10,15 +10,15 @@ import { postContent } from "../../../Api/Api";
 
 function Row({ pattern, element }) {
   var { currentTable, updateState } = useContext(Context);
-  var [rowData, setRowData] = useState(element);
+  var [currentData, setCurrentData] = useState(element);
   var [isChanged, setIsChanged] = useState(false);
   var [isEdit, setIsEdit] = useState(false);
 
-  function editRowData(e) {
+  function editcurrentData(e) {
     setIsChanged(true);
     var key = e.target.name;
     var value = e.target.value;
-    setRowData({ ...rowData, [key]: value });
+    setCurrentData({ ...currentData, [key]: value });
   }
 
   function deleteElement(flag) {
@@ -44,7 +44,7 @@ function Row({ pattern, element }) {
         type: "edit",
         content: {
           table: currentTable,
-          obj: rowData,
+          obj: currentData,
         },
       })
     ) {
@@ -55,22 +55,47 @@ function Row({ pattern, element }) {
   function cancelChanges() {
     setIsEdit(false);
     setIsChanged(false);
-    setRowData(element);
+    setCurrentData(element);
   }
 
   return (
-    <tr key={rowData.id}>
+    <tr key={currentData.id}>
       {pattern.map((key) => {
         return (
           <td key={key}>
             {isEdit && key !== "id" ? (
-              <input
-                name={key}
-                onChange={(e) => editRowData(e)}
-                value={rowData[key]}
-              />
+              <>
+                {key !== "role" ? (
+                  <input
+                    name={key}
+                    onChange={(e) => editcurrentData(e)}
+                    value={currentData[key]}
+                  />
+                ) : (
+                  <select name="role" onChange={(e) => editcurrentData(e)}>
+                    <option value={element[key]}>{element[key]}</option>
+                    {element[key] === "editor" ? (
+                      <option value="admin">admin</option>
+                    ) : (
+                      <option value="editor">editor</option>
+                    )}
+                  </select>
+                )}
+              </>
             ) : (
-              <>{rowData[key]}</>
+              <>
+                {key !== "role" ? (
+                  <span>{currentData[key]}</span>
+                ) : (
+                  <>
+                    {currentData[key] === "editor" ? (
+                      <span className="users-role-editor">editor</span>
+                    ) : (
+                      <span className="users-role-admin">admin</span>
+                    )}
+                  </>
+                )}
+              </>
             )}
           </td>
         );
@@ -92,7 +117,9 @@ function Row({ pattern, element }) {
             </button>
             <button
               onClick={() =>
-                deleteElement(window.confirm(`Are you sure?  ${rowData.id}`))
+                deleteElement(
+                  window.confirm(`Are you sure?  ${currentData.id}`)
+                )
               }
             >
               <img alt="delete" src={deleteButton}></img>

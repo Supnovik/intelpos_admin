@@ -30,6 +30,9 @@
       border: none;
       padding: 10px 15px;
       font-size: 14px;
+      select {
+        padding: 6px;
+      }
     }
     tbody tr:nth-child(even) {
       background: #f3f3f3;
@@ -69,6 +72,22 @@
     border: none;
   }
   input {
+    padding: 5px;
     width: 98%;
+  }
+}
+
+.users-role {
+  &-editor,
+  &-admin {
+    padding: 6px;
+    color: white;
+    border-radius: 5px;
+  }
+  &-admin {
+    background-color: green;
+  }
+  &-editor {
+    background-color: rgb(172, 59, 172);
   }
 }
