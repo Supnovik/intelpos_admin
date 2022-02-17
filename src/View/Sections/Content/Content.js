@@ -6,7 +6,7 @@ import Table from "../Table/Table";
 import { getContent } from "../../../Api/Api";
 
 function Content() {
-  var { currentTable } = useContext(Context);
+  var { currentTable, token } = useContext(Context);
   var [data, setData] = useState({
     isLoaded: false,
     response: [],
@@ -15,14 +15,14 @@ function Content() {
   useEffect(() => {
     setData({
       isLoaded: false,
-      response: getContent(currentTable, setData),
+      response: getContent(currentTable, setData, token),
     });
   }, [currentTable]);
 
   function updateState() {
     setData({
       isLoaded: false,
-      response: getContent(currentTable, setData),
+      response: getContent(currentTable, setData, token),
     });
   }
 

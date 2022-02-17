@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import "./Sidebar.scss";
 import Context from "../../../context";
-function Sidebar() {
+function Sidebar({ setIsLogin, setToken }) {
   var { setCurrentTable } = useContext(Context);
 
   function openTablesList() {
@@ -44,6 +44,16 @@ function Sidebar() {
           </button>
           <button onClick={() => setCurrentTable("comments")}>Comments</button>
         </div>
+      </div>
+      <div className="Sign-out">
+        <button
+          onClick={() => {
+            setToken(0);
+            setIsLogin(false);
+          }}
+        >
+          Sign out
+        </button>
       </div>
     </div>
   );

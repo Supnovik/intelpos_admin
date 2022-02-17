@@ -1,20 +1,18 @@
-const url = "http://159.223.167.52/api";
+const url = "http://localhost:8081/api";
 
-export function getContent(currentTable, setData) {
+export function getContent(currentTable, setData, token) {
   var requestOptions = {
     method: "GET",
   };
-
-  fetch(`${url}?${currentTable}`, requestOptions)
+  fetch(`${url}?${currentTable}&token=${token}`, requestOptions)
     .then((response) => response.json())
     .then((res) => setData({ isLoaded: true, response: res }))
     .catch((error) => console.log("error", error));
 }
 
-export async function postContent(obj) {
+export async function postContent(obj, token) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
-  console.log(obj);
   var raw = JSON.stringify(obj);
 
   var requestOptions = {
@@ -24,14 +22,7 @@ export async function postContent(obj) {
     redirect: "follow",
   };
 
-  fetch(url, requestOptions)
-    .then((response) => response.json())
-    .then((res) => setReturn(res))
-    .catch((error) => console.log("error", error));
-
-  function setReturn(res) {
-    console.log(res);
-    if (res.status === "200") return true;
-    else return false;
-  }
+  var response = await fetch(url, requestOptions);
+  var commits = await response.json();
+  return commits;
 }

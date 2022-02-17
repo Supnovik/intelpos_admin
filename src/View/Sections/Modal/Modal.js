@@ -2,23 +2,23 @@ import React from "react";
 import { postContent } from "../../../Api/Api";
 import "./Modal.scss";
 import md5 from "js-md5";
-export default function Modal({ setIsLogin }) {
+export default function Modal({ setIsLogin, setToken }) {
   function checkForExistence(e) {
     e.preventDefault();
-    var val;
     var userName = document.querySelector(".Modal-user").value;
     var userPassword = document.querySelector(".Modal-password").value;
     userPassword = md5(userPassword + "sol");
-    var responce = postContent({
+    postContent({
       type: "isAdmin",
       content: { nickname: userName, password: userPassword },
-    })
-      .then((value) => (val = value))
-      .then((value) => console.log(value));
-    console.log(val);
-    if (responce === true) {
-      setIsLogin(true);
-    }
+    }).then((res) => {
+      if (res.status === "200") {
+        setToken(res.token);
+        setIsLogin(true);
+      } else {
+        alert("Wrong login or password");
+      }
+    });
   }
   return (
     <div className="Modal">
@@ -34,13 +34,13 @@ export default function Modal({ setIsLogin }) {
             <input
               className="Modal-user"
               name="user"
-              placeholder="user name"
+              placeholder="User name"
             ></input>
             <input
               className="Modal-password"
               type="password"
               name="password"
-              placeholder="password"
+              placeholder="Password"
             ></input>
             <button type="submit">Go</button>
           </form>

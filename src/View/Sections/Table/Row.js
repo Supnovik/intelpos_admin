@@ -9,7 +9,7 @@ import cancelButton from "../../../imgs/icon-cancel.png";
 import { postContent } from "../../../Api/Api";
 
 function Row({ pattern, element }) {
-  var { currentTable, updateState } = useContext(Context);
+  var { currentTable, updateState, token } = useContext(Context);
   var [currentData, setCurrentData] = useState(element);
   var [isChanged, setIsChanged] = useState(false);
   var [isEdit, setIsEdit] = useState(false);
@@ -23,33 +23,40 @@ function Row({ pattern, element }) {
 
   function deleteElement(flag) {
     if (flag) {
-      if (
-        postContent({
+      postContent(
+        {
           type: "delete",
           content: {
             table: currentTable,
             obj: element,
           },
-        })
-      ) {
-        alert("Successfully deleted");
-        updateState();
-      } else alert("Something went wrong");
+        },
+        token
+      ).then((res) => {
+        if (res.status === "200") {
+          alert("Successfully deleted");
+          updateState();
+        } else alert("Something went wrong");
+      });
     }
   }
 
   function saveChanges() {
-    var responce = postContent({
-      type: "edit",
-      content: {
-        table: currentTable,
-        obj: currentData,
+    postContent(
+      {
+        type: "edit",
+        content: {
+          table: currentTable,
+          obj: currentData,
+        },
       },
+      token
+    ).then((res) => {
+      if (res.status) {
+        alert("Successfully update");
+        updateState();
+      } else alert("Something went wrong");
     });
-    if (responce) {
-      alert("Successfully update");
-      updateState();
-    } else alert("Something went wrong");
   }
   function cancelChanges() {
     setIsEdit(false);

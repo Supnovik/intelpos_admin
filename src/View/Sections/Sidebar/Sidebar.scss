@@ -1,4 +1,5 @@
 .Sidebar {
+  position: relative;
   background-color: rgb(93, 29, 153);
   color: white;
   width: 20%;
@@ -10,7 +11,8 @@
       text-transform: uppercase;
     }
   }
-  &-content {
+  &-content,
+  .Sign-out {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
@@ -31,6 +33,7 @@
       }
     }
   }
+
   &-tables {
     display: none;
     flex-direction: column;
@@ -71,4 +74,9 @@
   .right {
     transform: rotate(-45deg);
   }
+}
+
+.Sign-out {
+  position: absolute;
+  bottom: 10px;
 }
