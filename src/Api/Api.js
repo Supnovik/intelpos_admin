@@ -10,7 +10,7 @@ export function getContent(currentTable, setData, token) {
     .catch((error) => console.log("error", error));
 }
 
-export async function postContent(obj, token) {
+export async function postContent(obj) {
   var myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   var raw = JSON.stringify(obj);

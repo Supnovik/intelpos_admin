@@ -36,7 +36,7 @@ function Content() {
       .toLowerCase();
 
   return (
-    <Context.Provider value={{ currentTable, updateState }}>
+    <Context.Provider value={{ currentTable, updateState, token }}>
       <div className="Content">
         {!data.isLoaded ? (
           <div>Loading</div>

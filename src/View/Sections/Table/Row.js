@@ -23,41 +23,37 @@ function Row({ pattern, element }) {
 
   function deleteElement(flag) {
     if (flag) {
-      postContent(
-        {
-          type: "delete",
-          content: {
-            table: currentTable,
-            obj: element,
-          },
+      postContent({
+        type: "delete",
+        content: {
+          table: currentTable,
+          obj: element,
         },
-        token
-      ).then((res) => {
-        if (res.status === "200") {
-          alert("Successfully deleted");
-          updateState();
-        } else alert("Something went wrong");
-      });
+        token,
+      }).then((req) => checkRequest(req));
     }
   }
 
   function saveChanges() {
-    postContent(
-      {
-        type: "edit",
-        content: {
-          table: currentTable,
-          obj: currentData,
-        },
+    postContent({
+      type: "edit",
+      content: {
+        table: currentTable,
+        obj: currentData,
       },
-      token
-    ).then((res) => {
-      if (res.status) {
-        alert("Successfully update");
-        updateState();
-      } else alert("Something went wrong");
-    });
+      token,
+    }).then((req) => checkRequest(req));
   }
+
+  function checkRequest(req) {
+    if (req.status === "200") {
+      alert("Successfully changed");
+      updateState();
+    } else {
+      alert("Something went wrong");
+    }
+  }
+
   function cancelChanges() {
     setIsEdit(false);
     setIsChanged(false);

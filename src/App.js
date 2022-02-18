@@ -8,7 +8,7 @@ import "./App.scss";
 
 function App() {
   var [currentTable, setCurrentTable] = useState();
-  var [token, setToken] = useState();
+  var [token, setToken] = useState(0);
   var [isLogin, setIsLogin] = useState(false);
   return (
     <div className="App">
